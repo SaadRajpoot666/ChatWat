@@ -1,34 +1,21 @@
-import { createContext, useEffect, useState } from "react";
-import axios from "../axios";
+// ✅ src/context/UserContext.jsx
+import { createContext, useState, useEffect } from "react";
 
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [selectedChat, setSelectedChat] = useState(null);
 
-  // Load user from token
   useEffect(() => {
-    const fetchUser = async () => {
-      const token = localStorage.getItem("token");
-      if (token) {
-        try {
-          const res = await axios.get("/api/auth/user", {
-            headers: { Authorization: `Bearer ${token}` },
-          });
-          setUser(res.data.user);
-        } catch (err) {
-          console.error("Invalid token or user fetch error:", err);
-          setUser(null);
-          localStorage.removeItem("token");
-        }
-      }
-    };
-
-    fetchUser();
+    const token = localStorage.getItem("token");
+    if (token) {
+      setUser({ token }); // We're just storing token for now
+    }
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser, selectedChat, setSelectedChat }}>
       {children}
     </UserContext.Provider>
   );
