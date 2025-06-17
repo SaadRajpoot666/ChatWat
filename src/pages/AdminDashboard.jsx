@@ -4,7 +4,7 @@ import api from "../axios"; // Axios instance
 import { UserContext } from "../context/UserContext";
 import { toast } from "react-toastify";
 
-export const Dashboard = () => {
+export const Dashboard = ({dashId}) => {
   const { user } = useContext(UserContext);
   const [stats, setStats] = useState({
     totalUsers: 0,
@@ -47,7 +47,7 @@ export const Dashboard = () => {
   }, [user.token]);
 
   return (
-    <div className="p-6">
+    <div className="p-6" id={dashId} >
       <h1 className="text-4xl font-extrabold text-green-800 mb-8 text-center uppercase">
         🛡️ Welcome to Admin Dashboard
       </h1>
