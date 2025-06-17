@@ -12,7 +12,7 @@ export const NavBar = () => {
     localStorage.removeItem("token");
     navigate("/login");
   };
-
+   
   return (
     <header className="bg-white shadow-md py-4 px-6 flex justify-between items-center">
       <Link to="/" className="text-2xl font-bold text-green-600">ChatWat 💬</Link>
@@ -21,6 +21,7 @@ export const NavBar = () => {
         <ul className="flex gap-6 items-center text-green-700 font-medium">
           {user ? (
             <>
+
               <li>
                 <Link to="/contacts" className="hover:text-green-900">Contacts</Link>
               </li>

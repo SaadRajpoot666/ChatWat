@@ -38,7 +38,7 @@ export const Contacts = () => {
   }
 
   return (
-    <div className="p-6 max-w-md mx-auto mt-20 bg-white shadow-2xl rounded-2xl border border-green-900">
+    <div className="p-6 max-w-lg mx-auto mt-20 bg-white shadow-2xl  hover:scale-110 transition-all duration-200 ease-in-out rounded-2xl border border-green-900">
       <title>Contacts | ChatWat </title>
       <h2 className="text-3xl font-extrabold mb-6 text-green-900 text-center">
         Your Contacts 📇
@@ -51,8 +51,9 @@ export const Contacts = () => {
             <li
               key={u._id}
               onClick={() => handleUserClick(u)}
-              className="bg-green-100 hover:bg-green-200 transition duration-200 cursor-pointer rounded-xl px-5 py-3 flex items-center justify-between shadow-sm hover:shadow-md"
+              className="bg-white shadow-2xl hover:bg-green-200 transition hover:scale-110 duration-200 cursor-pointer rounded-xl px-5 py-3 flex items-center justify-between  hover:shadow-md"
             >
+              <span className="bg-green-900 px-4 py-2 rounded-4xl text-white ">{u.name.charAt(0)}</span>
               <span className="text-lg font-semibold text-green-900">
                 {u.name}
               </span>

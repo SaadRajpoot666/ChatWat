@@ -4,13 +4,19 @@ import { createContext, useState, useEffect } from "react";
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    role: "",
+  });
+
   const [selectedChat, setSelectedChat] = useState(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setUser({ token }); // We're just storing token for now
+    const userData = localStorage.getItem("user");
+
+    if (userData) {
+      setUser(JSON.parse(userData)); // Now it sets full user info
     }
   }, []);
 
