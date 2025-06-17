@@ -7,6 +7,7 @@ import {Login }from "./pages/login"
 import { Privacy } from "./pages/Privacy";
 import { Verify } from "./pages/verify";
 import { Contacts } from "./pages/Contacts";
+import { Admin } from "./pages/Admin";
 export const router = createBrowserRouter([
     {path:'/', element:<Layout    />, children:[
         {index:true,element:<Landing   />},
@@ -16,6 +17,7 @@ export const router = createBrowserRouter([
         {path:"privacy",element:<Privacy   />},
         {path:"verify-otp",element:<Verify   />},
         {path:"contacts",element:<Contacts   />},
+        {path:"admin",element:<Admin   />},
     ]}
 ])
 
