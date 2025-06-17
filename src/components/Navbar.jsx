@@ -15,7 +15,7 @@ export const NavBar = () => {
    
   return (
     <header className="bg-white shadow-md py-4 px-6 flex justify-between items-center">
-      <Link to="/" className="text-2xl font-bold text-green-600">ChatWat 💬</Link>
+      <Link to="/" className="md:text-2xl  font-bold text-green-600">ChatWat 💬</Link>
 
       <nav>
         <ul className="flex gap-6 items-center text-green-700 font-medium">
