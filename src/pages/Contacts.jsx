@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react";
-import axios from "../axios";
 import { UserContext } from "../context/UserContext";
 import { toast } from "react-toastify";
+import api from "../axios";
 
 export const Contacts = () => {
   const { user, setSelectedChat } = useContext(UserContext);
@@ -16,8 +16,7 @@ export const Contacts = () => {
           return;
         }
 
-        const res = await axios.get("/chat/users");
-
+        const res = await api.get("/chat/users");
         console.log("Fetched Users:", res.data);
         setUsers(res.data);
       } catch (err) {
@@ -31,7 +30,7 @@ export const Contacts = () => {
 
   const handleUserClick = (selectedUser) => {
     setSelectedChat(selectedUser);
-    toast.success(`Chatting with ${selectedUser.name}`);
+    toast.success(`Chatting with ${selectedUser.name} 💬`);
   };
 
   if (!user) {
@@ -39,19 +38,25 @@ export const Contacts = () => {
   }
 
   return (
-    <div className="p-6 max-w-md mx-auto bg-white rounded shadow">
-      <h2 className="text-2xl font-bold mb-4 text-green-900">Contacts</h2>
+    <div className="p-6 max-w-md mx-auto mt-20 bg-white shadow-2xl rounded-2xl border border-green-900">
+      <title>Contacts | ChatWat </title>
+      <h2 className="text-3xl font-extrabold mb-6 text-green-900 text-center">
+        Your Contacts 📇
+      </h2>
       {users.length === 0 ? (
-        <p className="text-gray-500">No contacts found 💨</p>
+        <p className="text-center text-gray-400 italic">No contacts found 💨</p>
       ) : (
-        <ul className="space-y-2">
+        <ul className="space-y-3">
           {users.map((u) => (
             <li
               key={u._id}
-              className="p-3 bg-green-100 rounded hover:bg-green-200 cursor-pointer"
               onClick={() => handleUserClick(u)}
+              className="bg-green-100 hover:bg-green-200 transition duration-200 cursor-pointer rounded-xl px-5 py-3 flex items-center justify-between shadow-sm hover:shadow-md"
             >
-              <span className="font-semibold">{u.name}</span> ({u.email})
+              <span className="text-lg font-semibold text-green-900">
+                {u.name}
+              </span>
+              <span className="text-sm text-green-700">🟢 Online</span>
             </li>
           ))}
         </ul>
