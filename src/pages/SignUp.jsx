@@ -2,9 +2,9 @@ import { useState, useContext } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { NavLink, useNavigate } from "react-router-dom";
-import axios from "../axios";
 import "react-toastify/dist/ReactToastify.css";
 import { UserContext } from "../context/UserContext";
+import api from "../axios";
 
 export const SignUp = () => {
   const { setUser } = useContext(UserContext);
@@ -46,7 +46,7 @@ export const SignUp = () => {
     }
 
     try {
-      const res = await axios.post("/auth/signup", {
+      const res = await api.post("/auth/signup", {
         name,
         email,
         password,

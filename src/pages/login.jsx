@@ -1,9 +1,10 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import "react-toastify/dist/ReactToastify.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import axios from "../axios";
 import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import api from "../axios"; // ✅ Use custom Axios instance
 import { UserContext } from "../context/UserContext";
 
 export const Login = () => {
@@ -41,18 +42,21 @@ export const Login = () => {
     setLoading(true);
 
     try {
-      const res = await axios.post("/auth/login", formData);
+      const res = await api.post("/auth/login", formData);
       const { token, user } = res.data;
 
       if (token) {
+        // ✅ Save token to localStorage and update Axios headers
         localStorage.setItem("token", token);
-        setUser({ ...user, token });
-        toast.success("Logged in successfully 🌟");
+        api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
+        setUser({ ...user, token });
+
+        toast.success("Logged in successfully 🌟");
         setTimeout(() => {
           setLoading(false);
           navigate("/contacts");
-        }, 2000);
+        }, 1500);
       } else {
         toast.error("Token missing from response ❌");
         setLoading(false);
@@ -69,7 +73,10 @@ export const Login = () => {
       <title>Login | ChatWat</title>
       <ToastContainer position="top-right" autoClose={3000} theme="colored" />
       <div className="min-h-screen flex justify-center items-center bg-white px-4">
-        <form onSubmit={handleSubmit} className="w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl">
+        <form
+          onSubmit={handleSubmit}
+          className="w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl"
+        >
           <div className="flex flex-col border-2 border-green-800 px-6 sm:px-12 py-10 shadow-xl rounded-lg">
             <h1 className="text-3xl sm:text-4xl text-green-900 font-extrabold text-center mb-6">
               Login to ChatWat
