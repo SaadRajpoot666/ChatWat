@@ -21,6 +21,8 @@ export const router = createBrowserRouter([
     ]}
 ])
 
+
+
 function Layout(){
     return <>
     <NavBar    />

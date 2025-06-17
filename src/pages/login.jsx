@@ -46,7 +46,7 @@ export const Login = () => {
       const { token, user } = res.data;
 
       if (token) {
-        // ✅ Save token to localStorage and update Axios headers
+        // Save token to localStorage and update Axios headers
         localStorage.setItem("token", token);
         localStorage.setItem("user", JSON.stringify(user));
 
