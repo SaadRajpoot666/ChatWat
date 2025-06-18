@@ -1,7 +1,7 @@
 import { io } from "socket.io-client";
 
 // Replace with your actual logic to get logged-in user ID
-const userId = localStorage.getItem("userId"); 
+const userId = JSON.parse(localStorage.getItem("user"))?._id;
 
 const socket = io("http://localhost:5000", {
   withCredentials: true,

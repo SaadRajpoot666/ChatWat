@@ -1,10 +1,13 @@
 // src/pages/Dashboard.jsx
 import { useEffect, useState, useContext } from "react";
-import api from "../axios"; // Axios instance
+import api from "../axios";
 import { UserContext } from "../context/UserContext";
 import { toast } from "react-toastify";
+import {
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
+} from "recharts";
 
-export const Dashboard = ({dashId}) => {
+export const Dashboard = ({ dashId }) => {
   const { user } = useContext(UserContext);
   const [stats, setStats] = useState({
     totalUsers: 0,
@@ -46,8 +49,16 @@ export const Dashboard = ({dashId}) => {
     fetchStats();
   }, [user.token]);
 
+  // 📊 Bar chart data
+  const chartData = [
+    { name: "Users", value: stats.totalUsers },
+    { name: "Messages", value: stats.totalMessages },
+    { name: "Online", value: stats.onlineUsers },
+    { name: "Admins", value: stats.adminsCount },
+  ];
+
   return (
-    <div className="p-6" id={dashId} >
+    <div className="p-6" id={dashId}>
       <h1 className="text-4xl font-extrabold text-green-800 mb-8 text-center uppercase">
         🛡️ Welcome to Admin Dashboard
       </h1>
@@ -59,8 +70,20 @@ export const Dashboard = ({dashId}) => {
         <Card title="Admins Count" value={stats.adminsCount} color="bg-red-100" />
       </div>
 
-      <div className="mt-12 text-center text-gray-600 italic">
-        📊 Analytics, logs, and charts coming soon...
+      {/* 🎯 Add the chart below */}
+      <div className="mt-12">
+        <h2 className="text-2xl font-bold text-center text-green-700 mb-4">
+          📊 Stats Overview
+        </h2>
+        <ResponsiveContainer width="100%" height={300}>
+          <BarChart data={chartData} margin={{ top: 20, right: 30, left: 0, bottom: 5 }}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis allowDecimals={false} />
+            <Tooltip />
+            <Bar dataKey="value" fill="#16a34a" radius={[4, 4, 0, 0]} />
+          </BarChart>
+        </ResponsiveContainer>
       </div>
     </div>
   );
@@ -74,4 +97,3 @@ const Card = ({ title, value, color }) => {
     </div>
   );
 };
-
