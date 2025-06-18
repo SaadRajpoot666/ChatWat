@@ -7,7 +7,7 @@ export const UserSettings = ({ users, refresh }) => {
 
   const handleAction = async (id, action) => {
     try {
-      await api.put(`/api/admin/users/${id}/${action}`, {}, {
+      await api.put(`/admin/users/${id}/${action}`, {}, {
         headers: { Authorization: `Bearer ${token}` },
       });
       refresh();
@@ -22,7 +22,7 @@ export const UserSettings = ({ users, refresh }) => {
     if (!confirm) return;
 
     try {
-      await api.delete(`/api/admin/users/${id}`, {
+      await api.delete(`/admin/users/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       refresh();
