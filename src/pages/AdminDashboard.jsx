@@ -17,16 +17,16 @@ export const Dashboard = ({dashId}) => {
     const fetchStats = async () => {
       try {
         const [usersRes, messagesRes, onlineRes, adminsRes] = await Promise.all([
-          api.get("/api/admin/total-users", {
+          api.get("/admin/total-users", {
             headers: { Authorization: `Bearer ${user.token}` },
           }),
-          api.get("/api/admin/total-messages", {
+          api.get("/admin/total-messages", {
             headers: { Authorization: `Bearer ${user.token}` },
           }),
-          api.get("/api/admin/online-users", {
+          api.get("/admin/online-users", {
             headers: { Authorization: `Bearer ${user.token}` },
           }),
-          api.get("/api/admin/admins-count", {
+          api.get("/admin/admins-count", {
             headers: { Authorization: `Bearer ${user.token}` },
           }),
         ]);
