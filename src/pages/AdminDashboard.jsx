@@ -91,7 +91,7 @@ export const Dashboard = ({ dashId }) => {
 
 const Card = ({ title, value, color }) => {
   return (
-    <div className={`rounded-2xl shadow-xl p-6 text-center hover:scale-110 duration-200 transition-all ease-in-out hover:cursor-pointer ${color}`}>
+    <div className={`rounded-2xl shadow-2xl p-6 text-center hover:scale-110 duration-200 transition-all ease-in-out hover:cursor-pointer ${color}`}>
       <h2 className="text-xl font-semibold text-gray-700">{title}</h2>
       <p className="text-3xl font-bold text-green-800 mt-2">{value}</p>
     </div>
