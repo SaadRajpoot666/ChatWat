@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Sidebar } from "../components/AdminSidebar";
 import { AdminUserTable } from "../components/AdminUserTable";
 import { Dashboard } from "./AdminDashboard";
+import { AdminMessages } from "./AdminMessages";
 
 export const Admin = () => {
   const { user, setUser } = useContext(UserContext);
@@ -44,7 +45,7 @@ export const Admin = () => {
 
       <div className="flex flex-1 relative">
         {/* Sidebar */}
-        <Sidebar usersid={"userTable"} dashId={"dashboard"} />
+        <Sidebar usersid={"userTable"} dashId={"dashboard"} messages={"messages"} />
 
         {/* Main Content */}
         <main className="flex-1 p-4 md:p-8 md:ml-48">
@@ -63,6 +64,9 @@ export const Admin = () => {
           </section>
           <section>
             <AdminUserTable table={"userTable"} />
+          </section>
+          <section className="mt-[10%]" >
+            <AdminMessages   messageId={"messages"}  />
           </section>
         </main>
       </div>

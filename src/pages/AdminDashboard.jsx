@@ -20,16 +20,16 @@ export const Dashboard = ({ dashId }) => {
     const fetchStats = async () => {
       try {
         const [usersRes, messagesRes, onlineRes, adminsRes] = await Promise.all([
-          api.get("/admin/total-users", {
+          api.get("/admin/dash/total-users", {
             headers: { Authorization: `Bearer ${user.token}` },
           }),
-          api.get("/admin/total-messages", {
+          api.get("/admin/dash/total-messages", {
             headers: { Authorization: `Bearer ${user.token}` },
           }),
-          api.get("/admin/online-users", {
+          api.get("/admin/dash/online-users", {
             headers: { Authorization: `Bearer ${user.token}` },
           }),
-          api.get("/admin/admins-count", {
+          api.get("/admin/dash/admins-count", {
             headers: { Authorization: `Bearer ${user.token}` },
           }),
         ]);
@@ -81,7 +81,7 @@ export const Dashboard = ({ dashId }) => {
             <XAxis dataKey="name" />
             <YAxis allowDecimals={false} />
             <Tooltip />
-            <Bar dataKey="value" fill="#16a34a" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="value" fill="#16a34a" radius={[4, 4, 0, 0]} barSize={50} />
           </BarChart>
         </ResponsiveContainer>
       </div>
@@ -91,7 +91,7 @@ export const Dashboard = ({ dashId }) => {
 
 const Card = ({ title, value, color }) => {
   return (
-    <div className={`rounded-2xl shadow-md p-6 text-center ${color}`}>
+    <div className={`rounded-2xl shadow-xl p-6 text-center hover:scale-110 duration-200 transition-all ease-in-out hover:cursor-pointer ${color}`}>
       <h2 className="text-xl font-semibold text-gray-700">{title}</h2>
       <p className="text-3xl font-bold text-green-800 mt-2">{value}</p>
     </div>
