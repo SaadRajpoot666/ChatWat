@@ -17,6 +17,7 @@ export const SignUp = () => {
   const [checked, setChecked] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [isSending, setIsSending] = useState(false); //   for button loader
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -45,6 +46,8 @@ export const SignUp = () => {
       return toast.error("You must agree to our terms and conditions");
     }
 
+    setIsSending(true); //  Start loading
+
     try {
       const res = await api.post("/auth/signup", {
         name,
@@ -52,10 +55,8 @@ export const SignUp = () => {
         password,
       });
 
-      localStorage.setItem("token", res.data.token);
-      setUser({ ...res.data.user, token: res.data.token });
-
       toast.success("You Are Registered 🎉 Check your Gmail for OTP");
+
       setTimeout(() => {
         navigate("/verify-otp");
       }, 2000);
@@ -70,6 +71,8 @@ export const SignUp = () => {
     } catch (err) {
       console.error("Signup error:", err);
       toast.error(err.response?.data?.message || "Signup failed");
+    } finally {
+      setIsSending(false); //  Stop loading
     }
   };
 
@@ -151,9 +154,12 @@ export const SignUp = () => {
 
             <button
               type="submit"
-              className="bg-green-700 hover:bg-green-800 transition text-white font-bold py-2 rounded"
+              className={`${
+                isSending ? "bg-green-400 cursor-not-allowed" : "bg-green-700 hover:bg-green-800"
+              } transition text-white font-bold py-2 rounded`}
+              disabled={isSending}
             >
-              Submit
+              {isSending ? "Sending..." : "Submit"}
             </button>
           </div>
         </form>
