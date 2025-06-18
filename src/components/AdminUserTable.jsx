@@ -3,6 +3,9 @@ import { useEffect, useState, useContext } from "react";
 import { toast } from "react-toastify";
 import { UserContext } from "../context/UserContext";
 import api from "../axios";
+import { io } from "socket.io-client";
+
+const socket = io("http://localhost:5000"); // adjust if your backend URL is different
 
 export const AdminUserTable = ({table}) => {
   const { user } = useContext(UserContext);
@@ -35,7 +38,27 @@ export const AdminUserTable = ({table}) => {
   useEffect(() => {
     fetchUsers();
   }, []);
+// Real-time updates via socket.io
+  useEffect(() => {
+    socket.on("userUpdated", (updatedUser) => {
+      setUsers((prevUsers) =>
+        prevUsers.map((user) =>
+          user._id === updatedUser._id ? updatedUser : user
+        )
+      );
+    });
 
+    socket.on("userDeleted", (deletedUserId) => {
+      setUsers((prevUsers) =>
+        prevUsers.filter((user) => user._id !== deletedUserId)
+      );
+    });
+
+    return () => {
+      socket.off("userUpdated");
+      socket.off("userDeleted");
+    };
+  }, []);
   if (loading)
     return <p className="text-center text-green-800 mt-10">Loading users...</p>;
 
