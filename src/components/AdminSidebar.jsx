@@ -1,6 +1,6 @@
 import { Link } from "react-scroll";
 
-export const Sidebar = ({usersid,dashId,messages}) => {
+export const Sidebar = ({usersid,dashId,messages,settings}) => {
   return (
     <div className="bg-green-800 text-white w-48 h-full p-6
                      z-10 relative md:block hidden  flex-col">
@@ -40,7 +40,7 @@ export const Sidebar = ({usersid,dashId,messages}) => {
         </li>
         <li>
           <Link
-            to="settings"
+            to={settings}
             smooth={true}
             duration={500}
             offset={-70}

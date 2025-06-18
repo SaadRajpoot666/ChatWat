@@ -5,6 +5,7 @@ import { Sidebar } from "../components/AdminSidebar";
 import { AdminUserTable } from "../components/AdminUserTable";
 import { Dashboard } from "./AdminDashboard";
 import { AdminMessages } from "./AdminMessages";
+import { AdminSettings } from "./AdminSettings";
 
 export const Admin = () => {
   const { user, setUser } = useContext(UserContext);
@@ -17,19 +18,23 @@ export const Admin = () => {
     setUser(null);
     navigate("/login");
   };
-
-  if (!isAdmin) {
-    return (
-      <div className="text-center text-red-600 font-bold mt-20">
-        ⛔ Unauthorized Access
-      </div>
-    );
+  if (!isAdmin){
+    setTimeout(()=>{
+      navigate('/contacts')
+    },3000)
   }
+ 
+  
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-100 relative">
+      {!isAdmin &&  <div className="text-center text-red-600 font-bold mt-20">
+        ⛔ Unauthorized Access
+      </div> }
       {/* Header */}
-      <header className="bg-green-900 z-50 text-white p-4 flex justify-between items-center sticky top-0 ">
+{
+  isAdmin && <div> 
+  <header className="bg-green-900 z-50 text-white p-4 flex justify-between items-center sticky top-0 ">
         <h2 className="text-2xl font-bold uppercase">ChatWat Admin Panel</h2>
         <div className="flex items-center gap-4">
           {/* Hamburger toggle on mobile */}
@@ -45,7 +50,7 @@ export const Admin = () => {
 
       <div className="flex flex-1 relative">
         {/* Sidebar */}
-        <Sidebar usersid={"userTable"} dashId={"dashboard"} messages={"messages"} />
+        <Sidebar usersid={"userTable"} dashId={"dashboard"} messages={"messages"} settings={"settings"} />
 
         {/* Main Content */}
         <main className="flex-1 p-4 md:p-8 md:ml-48">
@@ -68,8 +73,14 @@ export const Admin = () => {
           <section className="mt-[10%]" >
             <AdminMessages   messageId={"messages"}  />
           </section>
+
+          <section className="mt-[10%]" >
+            <AdminSettings  settingsId={"settings"} />
+          </section>
         </main>
       </div>
+      </div>
+}
     </div>
   );
 };
