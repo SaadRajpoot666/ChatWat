@@ -1,6 +1,8 @@
 import React from "react";
 
 export const AdminMessageTable = ({ messages, onDelete }) => {
+  const safeMessages = Array.isArray(messages) ? messages : [];
+
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow">
@@ -14,14 +16,14 @@ export const AdminMessageTable = ({ messages, onDelete }) => {
           </tr>
         </thead>
         <tbody>
-          {messages.length === 0 ? (
+          {safeMessages.length === 0 ? (
             <tr>
               <td colSpan="5" className="text-center p-4">
                 No messages found 🫤
               </td>
             </tr>
           ) : (
-            messages.map((msg) => (
+            safeMessages.map((msg) => (
               <tr key={msg._id} className="border-t text-sm">
                 <td className="p-2">{msg.sender?.username || "Unknown"}</td>
                 <td className="p-2">{msg.receiver?.username || "Unknown"}</td>
@@ -43,4 +45,3 @@ export const AdminMessageTable = ({ messages, onDelete }) => {
     </div>
   );
 };
-
