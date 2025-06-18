@@ -17,7 +17,7 @@ export const AdminUserTable = ({table}) => {
         return;
       }
 
-      const res = await api.get("/users/all", {
+      const res = await api.get("/admin/users/all", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
