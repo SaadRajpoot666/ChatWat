@@ -1,16 +1,51 @@
-# React + Vite
+ # 💬 ChatWat — Real-Time Chat App (Frontend Only)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to the frontend of **ChatWat**, a sleek and powerful real-time chat application built with **React**, **Tailwind CSS**, and **Socket.IO frontend integration**.
 
-Currently, two official plugins are available:
+🚀 This project includes:
+- Fully responsive UI
+- Real-time messaging
+- OTP-based login/signup forms
+- Role-based dashboard with Admin Panel
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 🔗 Repository Info
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
- 
-# ChatWat
-ChatWat is a real-time chat solution that lets users send and receive messages instantly with a clean UI, user authentication, and seamless performance. Perfect for modern web apps, it supports one-on-one and group chats with ease.
- 
+- 🌐 **Frontend Repo:** [`saadrajpoot666/ChatWat`](https://github.com/saadrajpoot666/ChatWat)
+- 🚫 Backend is currently **not uploaded** (privately hosted)
+
+---
+
+## ⚙️ Tech Stack (Frontend)
+
+- **React.js** (v18+)
+- **Tailwind CSS**
+- **React Router DOM**
+- **Axios**
+- **Socket.IO Client**
+- **bars-react-table** (for admin tables)
+- **Framer Motion** (animations)
+- **Context API** (for global state like auth & user)
+- **Vite** (for fast build & dev)
+
+---
+
+## 📦 Installed NPM Packages
+
+Here are the key packages used in ChatWat’s frontend:
+
+| Package            | Purpose                               |
+|--------------------|----------------------------------------|
+| `axios`            | HTTP requests to backend               |
+| `react-router-dom` | Routing and navigation                 |
+| `socket.io-client` | Real-time communication                |
+| `bars-react-table` | Lightweight React data table for admin |
+| `framer-motion`    | Smooth animations                      |
+| `clsx`             | Conditional classes                    |
+| `jwt-decode`       | Decode JWT tokens for auth             |
+| `react-icons`      | Icon library                           |
+
+---
+
+## 📂 Folder Structure
