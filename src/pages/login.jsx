@@ -49,6 +49,8 @@ export const Login = () => {
         // Save token to localStorage and update Axios headers
         localStorage.setItem("token", token);
         localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("userId", user._id);
+
 
         api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 

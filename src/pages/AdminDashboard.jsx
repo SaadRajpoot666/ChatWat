@@ -1,11 +1,19 @@
-// src/pages/Dashboard.jsx
 import { useEffect, useState, useContext } from "react";
 import api from "../axios";
 import { UserContext } from "../context/UserContext";
 import { toast } from "react-toastify";
 import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
 } from "recharts";
+import { io } from "socket.io-client";
+
+const socket = io("http://localhost:5000"); // Adjust backend URL if needed
 
 export const Dashboard = ({ dashId }) => {
   const { user } = useContext(UserContext);
@@ -16,40 +24,54 @@ export const Dashboard = ({ dashId }) => {
     adminsCount: 0,
   });
 
+  // 👇 Fetch stats function (called on load and via socket)
+  const fetchStats = async () => {
+    try {
+      const [usersRes, messagesRes, onlineRes, adminsRes] = await Promise.all([
+        api.get("/admin/dash/total-users", {
+          headers: { Authorization: `Bearer ${user.token}` },
+        }),
+        api.get("/admin/dash/total-messages", {
+          headers: { Authorization: `Bearer ${user.token}` },
+        }),
+        api.get("/admin/dash/online-users", {
+          headers: { Authorization: `Bearer ${user.token}` },
+        }),
+        api.get("/admin/dash/admins-count", {
+          headers: { Authorization: `Bearer ${user.token}` },
+        }),
+      ]);
+
+      setStats({
+        totalUsers: usersRes.data.count,
+        totalMessages: messagesRes.data.count,
+        onlineUsers: onlineRes.data.count,
+        adminsCount: adminsRes.data.count,
+      });
+    } catch (err) {
+      toast.error("Failed to fetch dashboard stats 😓");
+      console.error(err);
+    }
+  };
+
+  // 📦 Fetch once on mount
   useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const [usersRes, messagesRes, onlineRes, adminsRes] = await Promise.all([
-          api.get("/admin/dash/total-users", {
-            headers: { Authorization: `Bearer ${user.token}` },
-          }),
-          api.get("/admin/dash/total-messages", {
-            headers: { Authorization: `Bearer ${user.token}` },
-          }),
-          api.get("/admin/dash/online-users", {
-            headers: { Authorization: `Bearer ${user.token}` },
-          }),
-          api.get("/admin/dash/admins-count", {
-            headers: { Authorization: `Bearer ${user.token}` },
-          }),
-        ]);
-
-        setStats({
-          totalUsers: usersRes.data.count,
-          totalMessages: messagesRes.data.count,
-          onlineUsers: onlineRes.data.count,
-          adminsCount: adminsRes.data.count,
-        });
-      } catch (err) {
-        toast.error("Failed to fetch dashboard stats 😓");
-        console.error(err);
-      }
-    };
-
     fetchStats();
   }, [user.token]);
 
-  // 📊 Bar chart data
+  // 🔄 Real-time updates via socket
+  useEffect(() => {
+    socket.on("userUpdated", fetchStats);
+    socket.on("userDeleted", fetchStats);
+    socket.on("messageSent", fetchStats); // optional if you emit it
+
+    return () => {
+      socket.off("userUpdated", fetchStats);
+      socket.off("userDeleted", fetchStats);
+      socket.off("messageSent", fetchStats);
+    };
+  }, []);
+
   const chartData = [
     { name: "Users", value: stats.totalUsers },
     { name: "Messages", value: stats.totalMessages },
@@ -70,7 +92,6 @@ export const Dashboard = ({ dashId }) => {
         <Card title="Admins Count" value={stats.adminsCount} color="bg-red-100" />
       </div>
 
-      {/* 🎯 Add the chart below */}
       <div className="mt-12">
         <h2 className="text-2xl font-bold text-center text-green-700 mb-4">
           📊 Stats Overview
@@ -89,9 +110,12 @@ export const Dashboard = ({ dashId }) => {
   );
 };
 
+// Card Component
 const Card = ({ title, value, color }) => {
   return (
-    <div className={`rounded-2xl shadow-2xl p-6 text-center hover:scale-110 duration-200 transition-all ease-in-out hover:cursor-pointer ${color}`}>
+    <div
+      className={`rounded-2xl shadow-2xl p-6 text-center hover:scale-110 duration-200 transition-all ease-in-out hover:cursor-pointer ${color}`}
+    >
       <h2 className="text-xl font-semibold text-gray-700">{title}</h2>
       <p className="text-3xl font-bold text-green-800 mt-2">{value}</p>
     </div>
