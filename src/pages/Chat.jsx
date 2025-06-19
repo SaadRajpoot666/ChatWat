@@ -12,7 +12,7 @@ export const Chat = () => {
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef(null);
 
-  const roomId = [currentUser._id, id].sort().join("_");
+  const roomId = [currentUser.id, id].sort().join("_");
 
   useEffect(() => {
     socket.emit("joinRoom", roomId);
@@ -34,7 +34,7 @@ export const Chat = () => {
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const res = await api.get(`/messages/${currentUser._id}/${id}`);
+        const res = await api.get(`/chat/messages/${currentUser.id}/${id}`);
         setMessages(res.data);
       } catch (err) {
         console.error("Failed to fetch messages", err);
@@ -62,7 +62,7 @@ export const Chat = () => {
 
     socket.emit("sendMessage", {
       roomId,
-      sender: currentUser._id,
+      sender: currentUser.id,
       receiver: id,
       message: newMsg,
     });
@@ -81,12 +81,12 @@ export const Chat = () => {
           <div
             key={i}
             className={`my-2 flex ${
-              msg.sender === currentUser._id ? "justify-end" : "justify-start"
+              msg.sender === currentUser.id ? "justify-end" : "justify-start"
             }`}
           >
             <div
               className={`px-4 py-2 max-w-xs rounded-lg shadow text-sm ${
-                msg.sender === currentUser._id
+                msg.sender === currentUser.id
                   ? "bg-green-500 text-white"
                   : "bg-white border border-green-300 text-green-800"
               }`}
