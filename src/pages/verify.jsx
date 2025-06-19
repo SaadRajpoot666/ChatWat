@@ -21,8 +21,8 @@ export const Verify = () => {
 
     try {
       const res = await axios.post("/auth/verify-otp", {
-        email,
         otp,
+        email,
       });
 
       localStorage.setItem("token", res.data.token); // ✅ Save token
@@ -72,6 +72,7 @@ export const Verify = () => {
       >
         {loading ? "Verifying..." : "Verify"}
       </button>
+      <p className="mt-[5%] text-red-600 ">Check: OTP & Email is Correct</p>
     </div>
   );
 };
