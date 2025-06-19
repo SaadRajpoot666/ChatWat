@@ -32,20 +32,27 @@ export const Chat = () => {
   }, [roomId]);
 
   useEffect(() => {
-    const fetchMessages = async () => {
-      try {
-        const res = await api.get(`/chat/messages/${currentUser.id}/${id}`);
-        setMessages(res.data);
-      } catch (err) {
-        console.error("Failed to fetch messages", err);
-      }
-    };
+  const fetchMessages = async () => {
+    if (!currentUser?.id || !id) {
+      console.warn("Missing senderId or receiverId");
+      return;
+    }
+    try {
+      const res = await api.get(`/chat/messages/${currentUser.id}/${id}`);
+      setMessages(res.data);
+    } catch (err) {
+      console.error("Failed to fetch messages", err);
+    }
+  };
 
-    if (currentUser && id) fetchMessages();
-  }, [currentUser, id]);
+  if (currentUser && id) {
+    fetchMessages();
+  }
+}, [currentUser, id]);
+
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [messages]);
 
   const handleTyping = (e) => {
