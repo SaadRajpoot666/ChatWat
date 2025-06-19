@@ -2,8 +2,9 @@ import { useEffect, useState, useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import { toast } from "react-toastify";
 import api from "../axios";
-
+import {useNavigate} from "react-router-dom"
 export const Contacts = () => {
+  const navigate = useNavigate()
   const { user, setSelectedChat } = useContext(UserContext);
   const [users, setUsers] = useState([]);
 
@@ -30,6 +31,8 @@ export const Contacts = () => {
 
   const handleUserClick = (selectedUser) => {
     setSelectedChat(selectedUser);
+      navigate(`/chat/${selectedUser._id}`);
+
     toast.success(`Chatting with ${selectedUser.name} 💬`);
   };
 
