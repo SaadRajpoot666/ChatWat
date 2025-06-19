@@ -5,7 +5,7 @@ import { UserContext } from "../context/UserContext";
 import api from "../axios";
 import { io } from "socket.io-client";
 
-const socket = io("http://localhost:5000"); // adjust if your backend URL is different
+const socket = io("https://chatbackend-zbpz.onrender.com"); // adjust if your backend URL is different
 
 export const AdminUserTable = ({table}) => {
   const { user } = useContext(UserContext);
