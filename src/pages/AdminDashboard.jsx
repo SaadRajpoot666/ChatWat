@@ -11,10 +11,8 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { io } from "socket.io-client";
 
-const socket = io("http://localhost:5000"); // Adjust backend URL if needed
-
+import socket from "../socket"
 export const Dashboard = ({ dashId }) => {
   const { user } = useContext(UserContext);
   const [stats, setStats] = useState({

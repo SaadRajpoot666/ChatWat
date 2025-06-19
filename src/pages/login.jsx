@@ -4,7 +4,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import api from "../axios"; // ✅ Use custom Axios instance
+import api from "../axios"; //  Use custom Axios instance
 import { UserContext } from "../context/UserContext";
 
 export const Login = () => {
@@ -46,17 +46,19 @@ export const Login = () => {
       const { token, user } = res.data;
 
       if (token) {
-        // Save token to localStorage and update Axios headers
+        // Save to localStorage
         localStorage.setItem("token", token);
         localStorage.setItem("user", JSON.stringify(user));
         localStorage.setItem("userId", user.id);
 
-
+        // Set default Axios header
         api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-        setUser({ ...user, token });
+        //  Set user into context cleanly
+        setUser(user);
 
         toast.success("Logged in successfully 🌟");
+
         setTimeout(() => {
           setLoading(false);
           navigate("/contacts");
@@ -126,7 +128,10 @@ export const Login = () => {
 
             <p className="mt-4 text-sm text-center text-green-700">
               Don't have an account?{" "}
-              <a href="/signup" className="text-green-900 font-medium underline">
+              <a
+                href="/signup"
+                className="text-green-900 font-medium underline"
+              >
                 Sign up
               </a>
             </p>

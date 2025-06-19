@@ -2,9 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import api from "../axios";
 import { UserSettings } from "../components/UserSettings";
-import { io } from "socket.io-client";
-
-const socket = io("http://localhost:5000"); // adjust if your backend URL is different
+import socket from "../socket"
 
 export const AdminSettings = ({ settingsId }) => {
   const [users, setUsers] = useState([]);

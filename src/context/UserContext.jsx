@@ -3,26 +3,32 @@ import { createContext, useState, useEffect } from "react";
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState({
-    name: "",
-    email: "",
-    role: "",
-  });
-
-  const [token, setToken] = useState(null); 
+  const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
   const [selectedChat, setSelectedChat] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const userData = localStorage.getItem("user");
-    const storedToken = localStorage.getItem("token"); //  Get token from localStorage
+    const storedUser = localStorage.getItem("user");
+    const storedToken = localStorage.getItem("token");
 
-    if (userData) {
-      setUser(JSON.parse(userData));
+    if (storedUser && storedToken) {
+      try {
+        setUser(JSON.parse(storedUser));
+        setToken(storedToken);
+      } catch (err) {
+        console.error("Error parsing user from localStorage", err);
+        setUser(null);
+        setToken(null);
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+      }
+    } else {
+      setUser(null);
+      setToken(null);
     }
 
-    if (storedToken) {
-      setToken(storedToken);
-    }
+    setLoading(false);
   }, []);
 
   return (
@@ -30,10 +36,11 @@ export const UserProvider = ({ children }) => {
       value={{
         user,
         setUser,
-        token, // Provide token here
+        token,
         setToken,
         selectedChat,
         setSelectedChat,
+        loading,
       }}
     >
       {children}
