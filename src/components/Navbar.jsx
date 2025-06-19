@@ -25,9 +25,7 @@ export const NavBar = () => {
               <li>
                 <Link to="/contacts" className="hover:text-green-900">Contacts</Link>
               </li>
-              <li>
-                <Link to="/chat/123" className="hover:text-green-900">Chat</Link>
-              </li>
+              
               {user.role === "admin" && (
                 <li>
                   <Link to="/admin" className="hover:text-green-900">Admin</Link>
