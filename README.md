@@ -12,7 +12,7 @@ Welcome to the frontend of **ChatWat**, a sleek and powerful real-time chat appl
 
 ## 🔗 Repository Info
 
-- 🌐 **Frontend Repo:** [`saadrajpoot666/ChatWat`](https://github.com/saadrajpoot666/ChatWat)
+- 🌐 **Frontend Repo:** [`saadrajpoot666/ChatWat`](https://github.com/saadbkhalid666/ChatWat)
 - 🚫 Backend is currently **not uploaded** (privately hosted)
 
 ---
